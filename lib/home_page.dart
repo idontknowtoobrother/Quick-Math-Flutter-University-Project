@@ -22,7 +22,6 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   Container(
-                    color: colorWhite,
                     child: Column(
                       children: [
                         Text(
