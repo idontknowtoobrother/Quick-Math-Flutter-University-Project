@@ -25,32 +25,86 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       child: Column(
                         children: [
+                          const SizedBox(height: 19),
                           Image.asset(
                             'assets/images/logo.png',
                             width: 150,
                           ),
+                          const SizedBox(height: 19),
                           Container(
+                            width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                               color: colorWhite,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.20),
+                                  blurRadius: 8,
+                                ),
+                              ],
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 50,
-                                right: 50,
-                                top: 8,
-                                bottom: 8,
-                              ),
-                              child: Text(
-                                'Quick Math Game',
-                                style: TextStyle(
-                                    color: colorGrey,
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.bold),
+                            child: const Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Quick Math Game',
+                                  style: TextStyle(
+                                      color: colorGrey,
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           )
                         ],
                       ),
+                    )
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 0,
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () => {},
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: colorGreen,
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.20),
+                              blurRadius: 8,
+                            ),
+                          ],
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.only(
+                            left: 130,
+                            right: 130,
+                            top: 8,
+                            bottom: 8,
+                          ),
+                          child: Text(
+                            'START',
+                            style: TextStyle(
+                              color: colorWhite,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'Develop by 62160246 and 62160317 ',
+                      style: TextStyle(color: colorGrey),
+                    ),
+                    const SizedBox(
+                      height: 5,
                     )
                   ],
                 ),
