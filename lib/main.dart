@@ -13,7 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Quick Math',
-      theme: ThemeData(),
+      theme: ThemeData(
+        fontFamily: 'Poppins',
+      ),
+      debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
   }
