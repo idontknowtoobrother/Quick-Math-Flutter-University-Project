@@ -16,6 +16,30 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: colorBackground,
+        body: Column(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  Container(
+                    color: colorWhite,
+                    child: Column(
+                      children: [
+                        Text(
+                          'Quick Math Game',
+                          style: TextStyle(
+                              color: colorGrey,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
