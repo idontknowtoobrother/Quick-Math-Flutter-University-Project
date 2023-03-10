@@ -30,14 +30,14 @@ class _GamePageState extends State<GamePage> {
   }
 
   _startTimer() {
-    _timer = Timer.periodic(Duration(milliseconds: 1000), (_) {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         _percent += 10;
         _timeLeft -= 1;
         if (_percent >= 100) {
           _timeLeft = 10;
           _percent = 0.0;
-          _timer.cancel();
+          timer.cancel();
           final route = MaterialPageRoute(
             builder: (context) =>
                 LosePage(score: playerScore, text: 'TIMEOUT!'),

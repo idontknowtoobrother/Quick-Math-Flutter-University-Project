@@ -50,7 +50,7 @@ class _LosePageState extends State<LosePage> {
                       Text(
                         widget.text,
                         style: const TextStyle(
-                          fontSize: 70,
+                          fontSize: 55,
                           fontWeight: FontWeight.bold,
                           color: colorRed,
                         ),
