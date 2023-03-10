@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_math/game_page.dart';
 import 'package:quick_math/utils/action_button.dart';
 import 'package:quick_math/utils/const.dart';
 
@@ -12,6 +13,13 @@ class LosePage extends StatefulWidget {
 }
 
 class _LosePageState extends State<LosePage> {
+  void restartGame() {
+    final route = MaterialPageRoute(
+      builder: (context) => GamePage(),
+    );
+    Navigator.pushAndRemoveUntil(context, route, (route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,9 +65,7 @@ class _LosePageState extends State<LosePage> {
                   child: ActionButton(
                     info: 'RESTART',
                     bgColor: colorRed,
-                    callBack: () => {
-                      Navigator.of(context).pop(),
-                    },
+                    callBack: restartGame,
                   ),
                 ),
               ),
