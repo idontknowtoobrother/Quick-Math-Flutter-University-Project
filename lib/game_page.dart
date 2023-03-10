@@ -146,6 +146,7 @@ class _GamePageState extends State<GamePage> {
       return;
     }
 
+    _timer.cancel();
     Navigator.push(
       context,
       MaterialPageRoute(
