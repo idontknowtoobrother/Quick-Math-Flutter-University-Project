@@ -1,11 +1,109 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
+import 'package:quick_math/utils/answer_button.dart';
 import 'const.dart';
+import 'lose_page.dart';
 
-class GamePage extends StatelessWidget {
+class GamePage extends StatefulWidget {
   const GamePage({super.key});
+
+  @override
+  State<GamePage> createState() => _GamePageState();
+}
+
+class _GamePageState extends State<GamePage> {
+  int playerScore = 0;
+  List<String> answers = ['10', '25', '30'];
+  String correctAnswer = '25';
+  String question = '10 + 15 = ?';
+
+  void generateNewQuestion() {
+    int num1 = Random().nextInt(10) + 1;
+    int num2 = Random().nextInt(10) + 1;
+    correctAnswer = '${num1 + num2}';
+    question = '$num1 + $num2 = ?';
+    answers = [];
+    answers.add(correctAnswer);
+    answers.add('${(Random().nextInt(10) + 1)}');
+    answers.add('${(Random().nextInt(10) + 1)}');
+    answers.shuffle();
+  }
+
+  void answerQuestion(String answer) {
+    if (answer == correctAnswer) {
+      setState(() {
+        playerScore += 10;
+      });
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Container(
+              height: 110,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'CORRECT!!',
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Image.asset(
+                        "assets/images/correct.png",
+                        width: 45,
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  GestureDetector(
+                    onTap: () => {},
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: colorGreen,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.only(
+                          left: 37,
+                          right: 37,
+                          top: 7,
+                          bottom: 7,
+                        ),
+                        child: Text(
+                          'NEXT',
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: colorWhite,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+  }
+
+  void nextQuestion() {
+    Navigator.pop(context);
+    generateNewQuestion();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +129,8 @@ class GamePage extends StatelessWidget {
                 ],
               ),
               child: Text(
-                'SCORE : 10',
-                style: TextStyle(
+                'SCORE : $playerScore',
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
@@ -49,7 +147,7 @@ class GamePage extends StatelessWidget {
                     height: 129,
                   ),
                   Text(
-                    '10 + 15 = ?',
+                    question,
                     style: TextStyle(
                       fontSize: 55,
                       fontWeight: FontWeight.bold,
@@ -67,29 +165,9 @@ class GamePage extends StatelessWidget {
                   crossAxisCount: 3,
                 ),
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: colorWhite,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.20),
-                            blurRadius: 8,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '5',
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
+                  return AnswerButton(
+                    answerNumber: answers[index],
+                    onTap: () => answerQuestion(answers[index]),
                   );
                 },
               ),
