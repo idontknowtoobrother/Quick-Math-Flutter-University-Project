@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:quick_math/utils/answer_button.dart';
 import 'lose_page.dart';
-import 'utils/const.dart';
 import 'utils/const.dart';
 
 class GamePage extends StatefulWidget {
@@ -17,13 +18,41 @@ class _GamePageState extends State<GamePage> {
   int playerScore = 0;
   late int _num1;
   late int _num2;
+  late int _timeLeft;
   late List<String> _answers = [];
+
+  double _percent = 0.0;
+  late Timer _timer;
 
   _GamePageState() {
     generateNewQuestion(true);
+    _startTimer();
+  }
+
+  _startTimer() {
+    _timer = Timer.periodic(Duration(milliseconds: 1000), (_) {
+      setState(() {
+        _percent += 10;
+        _timeLeft -= 1;
+        if (_percent >= 100) {
+          _timeLeft = 0;
+          _percent = 100.0;
+          _timer.cancel();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return LosePage(score: playerScore, text: 'TIME OUT!');
+              },
+            ),
+          );
+        }
+      });
+    });
   }
 
   void generateNewQuestion(isIntitial) {
+    var timeLeft = 10;
     var num1 = Random().nextInt(10) + 1;
     var num2 = Random().nextInt(10) + 1;
     List<String> answers = [];
@@ -36,11 +65,13 @@ class _GamePageState extends State<GamePage> {
         _num1 = num1;
         _num2 = num2;
         _answers = answers;
+        _timeLeft = timeLeft;
       });
     } else {
       _num1 = num1;
       _num2 = num2;
       _answers = answers;
+      _timeLeft = timeLeft;
     }
   }
 
@@ -120,6 +151,7 @@ class _GamePageState extends State<GamePage> {
         builder: (context) {
           return LosePage(
             score: playerScore,
+            text: 'INCORRECT!',
           );
         },
       ),
@@ -146,15 +178,42 @@ class _GamePageState extends State<GamePage> {
               padding: const EdgeInsets.only(left: 12, top: 0),
               child: Row(
                 children: [
-                  Container(
-                    child: Text(
-                      'SCORE : $playerScore',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                  Expanded(
+                    flex: 5,
+                    child: Container(
+                      child: Text(
+                        'SCORE : $playerScore',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                   ),
+                  Expanded(
+                    flex: 1,
+                    child: CircularPercentIndicator(
+                      circularStrokeCap: CircularStrokeCap.round,
+                      percent: _percent / 100,
+                      animation: true,
+                      animateFromLastPercent: true,
+                      radius: 30.0,
+                      lineWidth: 10.0,
+                      progressColor: colorWhite,
+                      backgroundColor: colorLightGrey,
+                      center: Text(
+                        _timeLeft.toString(),
+                        style: const TextStyle(
+                          color: colorGrey,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  )
                 ],
               ),
             ),
