@@ -14,24 +14,37 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> {
   int playerScore = 0;
-  List<String> answers = ['10', '25', '30'];
-  String correctAnswer = '25';
-  String question = '10 + 15 = ?';
+  late int _num1;
+  late int _num2;
+  late List<String> _answers = [];
 
-  void generateNewQuestion() {
-    int num1 = Random().nextInt(10) + 1;
-    int num2 = Random().nextInt(10) + 1;
-    correctAnswer = '${num1 + num2}';
-    question = '$num1 + $num2 = ?';
-    answers = [];
-    answers.add(correctAnswer);
-    answers.add('${(Random().nextInt(10) + 1)}');
-    answers.add('${(Random().nextInt(10) + 1)}');
+  _GamePageState() {
+    generateNewQuestion(true);
+  }
+
+  void generateNewQuestion(isIntitial) {
+    var num1 = Random().nextInt(10) + 1;
+    var num2 = Random().nextInt(10) + 1;
+    List<String> answers = [];
+    answers.add('${num1 + num2}');
+    answers.add('${(Random().nextInt(20) + 1)}');
+    answers.add('${(Random().nextInt(30) + 1)}');
     answers.shuffle();
+    if (!isIntitial) {
+      setState(() {
+        _num1 = num1;
+        _num2 = num2;
+        _answers = answers;
+      });
+    } else {
+      _num1 = num1;
+      _num2 = num2;
+      _answers = answers;
+    }
   }
 
   void answerQuestion(String answer) {
-    if (answer == correctAnswer) {
+    if (int.parse(answer) == (_num1 + _num2)) {
       setState(() {
         playerScore += 10;
       });
@@ -67,7 +80,7 @@ class _GamePageState extends State<GamePage> {
                     height: 10,
                   ),
                   GestureDetector(
-                    onTap: () => {},
+                    onTap: nextQuestion,
                     child: Container(
                       decoration: BoxDecoration(
                         color: colorGreen,
@@ -102,7 +115,7 @@ class _GamePageState extends State<GamePage> {
 
   void nextQuestion() {
     Navigator.pop(context);
-    generateNewQuestion();
+    generateNewQuestion(false);
   }
 
   @override
@@ -147,7 +160,7 @@ class _GamePageState extends State<GamePage> {
                     height: 129,
                   ),
                   Text(
-                    question,
+                    '$_num1 + $_num2 = ?',
                     style: TextStyle(
                       fontSize: 55,
                       fontWeight: FontWeight.bold,
@@ -166,8 +179,8 @@ class _GamePageState extends State<GamePage> {
                 ),
                 itemBuilder: (context, index) {
                   return AnswerButton(
-                    answerNumber: answers[index],
-                    onTap: () => answerQuestion(answers[index]),
+                    answerNumber: _answers[index],
+                    onTap: () => answerQuestion(_answers[index]),
                   );
                 },
               ),
