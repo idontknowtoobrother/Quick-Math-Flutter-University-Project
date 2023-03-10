@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:quick_math/const.dart';
+import 'package:quick_math/utils/const.dart';
 import 'package:quick_math/game_page.dart';
 
 class HomePage extends StatefulWidget {

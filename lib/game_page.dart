@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:quick_math/utils/answer_button.dart';
-import 'const.dart';
 import 'lose_page.dart';
+import 'utils/const.dart';
+import 'utils/const.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -141,24 +142,20 @@ class _GamePageState extends State<GamePage> {
             const SizedBox(
               height: 10,
             ),
-            Container(
-              padding: EdgeInsets.only(left: 23, right: 23),
-              decoration: BoxDecoration(
-                color: colorWhite,
-                borderRadius: BorderRadius.circular(5),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.20),
-                    blurRadius: 8,
+            Padding(
+              padding: const EdgeInsets.only(left: 12, top: 0),
+              child: Row(
+                children: [
+                  Container(
+                    child: Text(
+                      'SCORE : $playerScore',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
                   ),
                 ],
-              ),
-              child: Text(
-                'SCORE : $playerScore',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
               ),
             ),
             const SizedBox(

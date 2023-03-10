@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../const.dart';
+import 'const.dart';
 
 class AnswerButton extends StatelessWidget {
   final String answerNumber;
