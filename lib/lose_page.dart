@@ -30,18 +30,12 @@ class _LosePageState extends State<LosePage> {
             Expanded(
               flex: 0,
               child: Container(
-                color: Colors.green,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: colorGreen,
-                    ),
-                    child: const ActionButton(
-                      label: 'RESTART',
-                      bgColor: colorRed,
-                    ),
-                  ),
+                child: ActionButton(
+                  info: 'RESTART',
+                  bgColor: colorRed,
+                  callBack: () => {
+                    Navigator.of(context).pop(),
+                  },
                 ),
               ),
             ),
