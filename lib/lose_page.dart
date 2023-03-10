@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quick_math/game_page.dart';
+import 'package:quick_math/home_page.dart';
 import 'package:quick_math/utils/action_button.dart';
 import 'package:quick_math/utils/const.dart';
 
@@ -16,6 +17,13 @@ class _LosePageState extends State<LosePage> {
   void restartGame() {
     final route = MaterialPageRoute(
       builder: (context) => GamePage(),
+    );
+    Navigator.pushAndRemoveUntil(context, route, (route) => false);
+  }
+
+  void mainMenu() {
+    final route = MaterialPageRoute(
+      builder: (context) => HomePage(),
     );
     Navigator.pushAndRemoveUntil(context, route, (route) => false);
   }
@@ -64,8 +72,18 @@ class _LosePageState extends State<LosePage> {
                 child: Container(
                   child: ActionButton(
                     info: 'RESTART',
-                    bgColor: colorRed,
+                    bgColor: colorGreen,
                     callBack: restartGame,
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 0,
+                child: Container(
+                  child: ActionButton(
+                    info: 'MAIN MENU',
+                    bgColor: colorGreen,
+                    callBack: mainMenu,
                   ),
                 ),
               ),

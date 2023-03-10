@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quick_math/game_page.dart';
 import 'package:quick_math/home_page.dart';
-
-import 'lose_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +17,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins',
       ),
       debugShowCheckedModeBanner: false,
-      home: GamePage(),
+      home: HomePage(),
     );
   }
 }
