@@ -60,14 +60,14 @@ class _GamePageState extends State<GamePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'CORRECT!!',
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Image.asset(
@@ -76,7 +76,7 @@ class _GamePageState extends State<GamePage> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   GestureDetector(
@@ -110,7 +110,19 @@ class _GamePageState extends State<GamePage> {
           );
         },
       );
+      return;
     }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return LosePage(
+            score: playerScore,
+          );
+        },
+      ),
+    );
   }
 
   void nextQuestion() {
