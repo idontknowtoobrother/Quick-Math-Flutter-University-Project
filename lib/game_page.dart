@@ -16,6 +16,7 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> {
   int playerScore = 0;
+  final int timeBase = 10;
   late int _num1;
   late int _num2;
   late int _timeLeft;
@@ -26,7 +27,6 @@ class _GamePageState extends State<GamePage> {
 
   _GamePageState() {
     generateNewQuestion(true);
-    _startTimer();
   }
 
   _startTimer() {
@@ -35,24 +35,20 @@ class _GamePageState extends State<GamePage> {
         _percent += 10;
         _timeLeft -= 1;
         if (_percent >= 100) {
-          _timeLeft = 0;
-          _percent = 100.0;
+          _timeLeft = 10;
+          _percent = 0.0;
           _timer.cancel();
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return LosePage(score: playerScore, text: 'TIME OUT!');
-              },
-            ),
+          final route = MaterialPageRoute(
+            builder: (context) =>
+                LosePage(score: playerScore, text: 'TIMEOUT!'),
           );
+          Navigator.pushAndRemoveUntil(context, route, (route) => false);
         }
       });
     });
   }
 
   void generateNewQuestion(isIntitial) {
-    var timeLeft = 10;
     var num1 = Random().nextInt(10) + 1;
     var num2 = Random().nextInt(10) + 1;
     List<String> answers = [];
@@ -65,13 +61,15 @@ class _GamePageState extends State<GamePage> {
         _num1 = num1;
         _num2 = num2;
         _answers = answers;
-        _timeLeft = timeLeft;
+        _timeLeft = timeBase;
+        _startTimer();
       });
     } else {
       _num1 = num1;
       _num2 = num2;
       _answers = answers;
-      _timeLeft = timeLeft;
+      _timeLeft = timeBase;
+      _startTimer();
     }
   }
 
@@ -79,6 +77,9 @@ class _GamePageState extends State<GamePage> {
     if (int.parse(answer) == (_num1 + _num2)) {
       setState(() {
         playerScore += 10;
+        _percent = 0.0;
+        _timeLeft = 0;
+        _timer.cancel();
       });
 
       showDialog(
@@ -251,35 +252,6 @@ class _GamePageState extends State<GamePage> {
                     onTap: () => answerQuestion(_answers[index]),
                   );
                 },
-              ),
-            ),
-            Expanded(
-              flex: 0,
-              child: GestureDetector(
-                onTap: () => {Navigator.pop(context)},
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: colorRed,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.20),
-                        blurRadius: 8,
-                      ),
-                    ],
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 23, right: 23),
-                    child: Text(
-                      'STOP',
-                      style: TextStyle(
-                        color: colorWhite,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
               ),
             ),
             const SizedBox(

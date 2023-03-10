@@ -33,7 +33,7 @@ class _LosePageState extends State<LosePage> {
                     children: [
                       Text(
                         widget.text,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 70,
                           fontWeight: FontWeight.bold,
                           color: colorRed,
@@ -41,7 +41,7 @@ class _LosePageState extends State<LosePage> {
                       ),
                       Text(
                         'SCORE : ${widget.score}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.bold,
                           color: colorGrey,
